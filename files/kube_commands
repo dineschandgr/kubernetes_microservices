@@ -1,0 +1,40 @@
+minikube status
+
+kubectl get all
+
+kubectl apply -f first-pod.yaml
+
+kubectl describe svc fleetman-webapp
+
+kubectl get po --show-labels
+
+#filter by release name
+kubectl get po --show-labels -l release=0 
+
+kubectl delete po webapp-release-0-5
+
+kubectl delete po --all
+
+kubectl describe rs webapp
+
+kubectl rollout status deploy webapp
+
+kubectl rollout history deploy webapp
+
+#to rollback to prev version
+kubectl rollout status deploy webapp
+
+kubectl logs -f movie-info-pod
+
+#get namespace
+kubectl get ns
+
+#get pods in a name space
+kubectl get po -n kube-system
+
+#go inside container shell
+winpty kubectl exec -it webapp-86bd4996fc-42xc6 sh
+
+#delete all resources forcefully
+kubectl delete -f .
+

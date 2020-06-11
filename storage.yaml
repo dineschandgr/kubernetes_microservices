@@ -1,0 +1,28 @@
+#what do we want. eg: Mongo wants 20 GB from the below physical storage. for developer. it does not refer to the persistence name below
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: 
+    name: mongo-pvc
+spec:
+    storageClassName: mylocalstorage
+    accessModes:
+     - ReadWriteOnce
+    resources:
+        requests:
+            storage: 20Gi #20 gb of volume
+            
+---
+#how do we want it implemented in kubernetes cluster. It is a total physical storage. for admin
+apiVersion: v1
+kind: PersistentVolume
+metadata: 
+    name: local-storage
+spec:
+    storageClassName: mylocalstorage
+    capacity:
+        storage: 20Gi
+    accessModes:
+     - ReadWriteOnce
+    hostPath: 
+        path: "/mnt/some new/directory/structure/"
+        type: DirectoryOrCreate

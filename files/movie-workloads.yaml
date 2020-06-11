@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: movie-info
+spec:     
+    selector:
+      matchLabels: 
+        app: movie-info
+    replicas: 1
+    template:  #template for the pods
+        metadata:
+            labels:
+                app: movie-info
+              
+        spec: 
+            containers:
+            - name: movie-info-image
+              image: dineshchandgr/aws-repo:movie-info-image
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: ratings-data
+spec:     
+    selector:
+      matchLabels: 
+        app: ratings-data
+    replicas: 1
+    template:  #template for the pods
+        metadata:
+            labels:
+                app: ratings-data
+              
+        spec: 
+            containers:
+            - name: ratings-data-image
+              image: dineshchandgr/aws-repo:ratings-data-image
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: movie-catalog
+spec:     
+    selector:
+      matchLabels: 
+        app: movie-catalog
+    replicas: 1
+    template:  #template for the pods
+        metadata:
+            labels:
+                app: movie-catalog
+              
+        spec: 
+            containers:
+            - name: movie-catalog-image
+              image: dineshchandgr/aws-repo:movie-catalog-image
+              env: 
+                - name: MOVIE_INFO_URI
+                  value: http://movie-info-service:8082
+                - name: RATINGS_DATA_URI
+                  value: http://ratings-data-service:8083
