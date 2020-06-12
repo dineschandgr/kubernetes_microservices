@@ -1,0 +1,142 @@
+1. Pods : (temporary)
+
+- Visible only inside a cluster
+- Smallest unit in k8s
+- Pod can have one or more containers
+
+   Pod Label 
+   
+ - key value pair to connect service to pod
+
+2 Service (long lived)
+
+- Visible outside cluster
+- Connect to k8s cluster and map to the pod
+- not required for pods whcih does not need rest end points 
+
+	service Selector
+
+ - Service has Selector with key value pair to find the pod
+
+3 ReplicaSets
+	- wrapper around pods
+	
+4. Deployments
+	- elegant way of deploying replica sets (rolling deployments)
+	- we can specify rollbacks with 2 replicasets0	
+	- old replica sets stores upto last 10 deployments
+
+
+5. Service Discovery
+    
+	Namespaces
+	- collection of relevant pods
+	
+	- kube-dns service for service discovery
+	- kubernetes automatically registers the ip of all services in DNS
+	- find ip of any service by its name
+ 
+	FQDN(Fully Qualified Domain Name)
+	-  to refer to a service using the name space
+	
+
+7. Persistence
+
+	-  Volumes to store data permanently
+	-  lot of options to store volumes based on the platform 
+	-  Easy to switch cloud providers
+    -  Persistent Volume Claim - a centralised config for the volumes
+	
+	Persistence Volume Claim:
+	 - specified by developer to request volume storage for the container
+	Persistence Volumes
+	 - specified by the admin to assign overall storage volume
+	Storage Class
+	 - to bind  PVC and PV
+	 
+8 Node in cloud
+
+    - Need to place resources inside nodes. Nodes are EC2 instances
+	- Master node will decide to run resources on the nodes
+	- Master node takes care of creating a new pod upon failure
+	
+9. Kops (Kubernetes operations)
+	- tool to completely manage kubernetes on ec2. We have control on master and worker nodes
+	- kops is easy for multi cloud architecture
+	- EKS does not provide access to master node. Only worker nodes can be managed by us
+    - 2 instance groups one for master and other for worker nodes
+	
+	1 master node
+	3 worker nodes
+	1 load balancer
+	1 asg
+	- when a node fails, kubernetes shifts the pod immediately to another node
+	
+	
+10. ELK stack
+
+	- Logstash/fluentd
+	- both captures logs in a container inside a node 
+	- both should be installed in a node
+	- it sends logs to Elastic search which is implemented using Apache Lucene
+	- Elastic search indexes the logs based on the keywords
+	- Kibana uses that data and creates visulations and dashboards.
+	- We can search for specific terms and create visualizations from that
+	
+11. Monitoring a cluster
+
+	Prometheus
+	
+	- install using helm manager
+	
+	- gathers monitoring info from cluster
+	
+	- install prometheus operator
+	
+	- very basic monitoring UI and hence we need grafana	
+	
+	Grafana
+	
+	- for visualizing data from prometheus 
+	
+	
+12. Requests and limits, Metrics Server
+
+	- set CPU and memory for every pod
+	- metrics server will provide the memory and cpu usage of every pod
+
+13. Pod horizontal auto scaling
+
+    - eg: if we set cpu request to 100m and we can set autoscaling of the pod if the cpu request exceeds 50m
+	- HPA object will modify deployment object and sets replica to 2 automatically
+	- If cpu usage goes down, HPA will tear down the extra pod
+	- HPA rules to be set for every individual deployment in the system
+	
+14. Liveness and Readiness Probes
+
+	- When pod autoscaling happens, kubernetes immediately routes traffic to them
+	- But pod will take some time to startup and hence users may get timeout errors in webpage
+	- Hence this probe is needed
+	- Kubernetes will send traffic to the pod only when it is ready
+	- Liveness probe will run continously throughtout the life time of the pod
+	- If any issue with the container, it will restart it
+	
+15.  ConfigMap
+
+	-  an object to store the common config	
+	-  we can inject calues from config map to a pod in runtime
+	-  We can mount the config as a volume and it becomes a file
+	
+	Secrets
+		- to store secrets
+		
+16. Ingress Controller
+
+	- Just use a single load balancer and map requests to Ingress controller
+	- Ingress controller routes requests to services based on route path 
+	
+17. StatefulSets
+
+	- 
+	
+	
