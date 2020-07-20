@@ -80,7 +80,7 @@
 	- both should be installed in a node
 	- it sends logs to Elastic search which is implemented using Apache Lucene
 	- Elastic search indexes the logs based on the keywords
-	- Kibana uses that data and creates visulations and dashboards.
+	- Kibana uses that data and creates visualizations and dashboards.
 	- We can search for specific terms and create visualizations from that
 	
 11. Monitoring a cluster
